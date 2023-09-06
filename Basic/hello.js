@@ -1,5 +1,6 @@
 const fetchData = async (params) => {
   try {
+    //todo: anh thấy bỏ / ở cuối đi xong params thêm / ở đâu params thì trông nó oke hơn đó 
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/${params}`
     );
@@ -33,8 +34,10 @@ const fetchData = async (params) => {
     });
 
     //4. Filter only users with more than 3 comments.
+    //todo: đặt tên biến gì đó cho nó tường minh em nhé , chứ đừng đặt i,j như thế này nha . sửa cả ở các hàm khác nữa nha .
     const respon = usersData.map((i) => {
-      const { company, address, phone, website, ...rest } = i;
+      const { company, address, phone, website, ...rest } = i
+      //todo: return luôn nhé không cần tạo thêm biến user đâu 
       const users = {
         ...rest,
         posts: posts.filter((j) => j.userId === i.id),
@@ -54,11 +57,13 @@ const fetchData = async (params) => {
         postsCount: posts.length,
       };
       console.log("🚀 ~ file: hello.js:52 ~ user:", user);
+      //todo : return luôn ở trên , bó console.log đi nhé 
       return user;
     });
 
     // 6.Who is the user with the most comments/posts?
     // most posts
+    //todo: bài 6 này thử dừng reduce xem sao nhé 
     const personMostPost = refactorData.sort(
       (a, b) => b.postsCount - a.postsCount
     )[0];

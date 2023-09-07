@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@koa/cors": "^4.0.0",
+    "cors": "^2.8.5",
     "faker": "^6.6.6",
     "fs": "^0.0.1-security",
     "koa": "^2.13.1",

@@ -26,15 +26,6 @@ function add(data) {
   );
 }
 
-function add(data) {
-  const updateProduct = [data, ...products];
-  return writeFileSync(
-    "./src/database/products.json",
-    JSON.stringify({
-      data: updateProduct,
-    })
-  );
-}
 
 function update(id, data) {
   const productUpdate = products.map((product) => {

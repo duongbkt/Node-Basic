@@ -48,8 +48,38 @@ function update(id, data) {
     })
   );
   return {
-    ...data, id: id
+    ...data,
+    id: id,
   };
+}
+
+function removeMany(id = []) {
+  const todo = todos.filter((todo) => !id.includes(todo.id));
+  writeFileSync(
+    "./src/database/todos.json",
+    JSON.stringify({
+      data: todo,
+    })
+  );
+}
+
+function updateMany(id = []) {
+  const todoUpdate = todos.map((todo) => {
+    if (id.includes(todo.id)) {
+      return {
+        ...todo,
+        completed: true,
+      };
+    }
+    return todo;
+  });
+  writeFileSync(
+    "./src/database/todos.json",
+    JSON.stringify({
+      data: todoUpdate,
+    })
+  );
+  return todoUpdate;
 }
 
 module.exports = {
@@ -57,4 +87,6 @@ module.exports = {
   add,
   update,
   remove,
+  removeMany,
+  updateMany,
 };

@@ -7,10 +7,11 @@ const {
   updateMany,
 } = require("../../database/todoReponsitory");
 
+//todo: phần này đãng nhé ra phải pass đc bài koajs basic mới làm đấy , tuy nhiên anh vẫn review qua nhé 
+
 async function getTodos(ctx) {
   try {
     const todos = getAllTodo();
-
     ctx.body = {
       data: todos,
     };
@@ -27,6 +28,8 @@ async function getTodos(ctx) {
 async function save(ctx) {
   try {
     const postData = ctx.request.body;
+    //todo: không dùng id thế này nhé thành ra mỗi todo là 1 userId khác nhau à , bỏ cái userId đi tìm cách khác để gen id cho  todo nhé 
+    // phần genid cho vào repository nhé 
     const todo = addTodo({
       id: new Date().getTime(),
       userId: new Date().getTime() + 1,

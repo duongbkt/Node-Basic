@@ -7,6 +7,8 @@ const { data: products } = JSON.parse(
   readFileSync("./src/database/products.json", "utf-8")
 );
 
+
+//todo: getall các điều kiện đâu hết rồi ? không xử lí điều kiện hả em 
 function getAll() {
   return products;
 }
@@ -18,6 +20,7 @@ function getAll() {
 
 function add(data) {
   const updateProduct = [data, ...products];
+  //todo: viết function rineeg nhé 
   return writeFileSync(
     "./src/database/products.json",
     JSON.stringify({
@@ -28,6 +31,7 @@ function add(data) {
 
 
 function update(id, data) {
+  //todo: không dùng map ở đây tìm cách khác nhé 
   const productUpdate = products.map((product) => {
     if (product.id === Number(id)) {
       return {

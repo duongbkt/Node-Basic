@@ -21,11 +21,6 @@ import HeaderBottom from "./HeaderBottom";
 
 const ResourceListWithSelection = () => {
   const [selectedTodos, setSelectedTodos] = useState([]);
-  console.log(
-    "🚀 ~ file: ResourceListWithSelection.js:24 ~ ResourceListWithSelection ~ selectedTodos:",
-    selectedTodos
-  );
-
   const [todos, setTodos] = useState([]);
   const [active, setActive] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -62,7 +57,7 @@ const ResourceListWithSelection = () => {
       completed: !todo.completed,
     });
     setTodos(
-      todos.map((item) => (item.id === data.data.id ? data.data : item))
+      todos.map((item) => (item.id === Number(data.data.id) ? data.data : item))
     );
   };
 

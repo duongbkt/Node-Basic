@@ -1,0 +1,41 @@
+header{
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 23px;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+.username{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.header-bottom{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 2px;
+  align-items: center;
+}
+.header-bottom h1{
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.content{
+  padding: 10px 319px;
+}
+
+.checkbox-selected{
+  border: 1px solid #ccc;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+.status{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.handleButton{
+  display: flex;
+  gap: 20px;
+}

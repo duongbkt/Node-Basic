@@ -32,7 +32,9 @@ function remove(id) {
 }
 
 function update(id, data) {
+  // dùng find chỗ này nhé không nên dùng map chỗ này nha 
   const todoUpdate = todos.map((todo) => {
+
     if (todo.id === id) {
       return {
         ...todo,
@@ -41,6 +43,7 @@ function update(id, data) {
     }
     return todo;
   });
+  //todo : tách ra 1 function riêng nhé 
   writeFileSync(
     "./src/database/todos.json",
     JSON.stringify({

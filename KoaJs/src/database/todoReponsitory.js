@@ -1,6 +1,8 @@
+const { faker } = require("@faker-js/faker");
 const fs = require("fs");
+const { todoWriteFileSync } = require("../helpers/fileSync");
 
-const { readFileSync, writeFileSync } = fs;
+const { readFileSync } = fs;
 
 const { data: todos } = JSON.parse(
   readFileSync("./src/database/todos.json", "utf-8")
@@ -11,45 +13,31 @@ function getAll() {
 }
 
 function add(data) {
-  const updateTodo = [data, ...todos];
-  writeFileSync(
-    "./src/database/todos.json",
-    JSON.stringify({
-      data: updateTodo,
-    })
-  );
+  const updateTodo = [{ id: faker.number.int(), ...data }, ...todos];
+  todoWriteFileSync(updateTodo);
   return data;
 }
 
 function remove(id) {
   const todo = todos.filter((todo) => todo.id !== id);
-  writeFileSync(
-    "./src/database/todos.json",
-    JSON.stringify({
-      data: todo,
-    })
-  );
+  todoWriteFileSync(todo);
 }
 
 function update(id, data) {
-  // dùng find chỗ này nhé không nên dùng map chỗ này nha 
-  const todoUpdate = todos.map((todo) => {
-
-    if (todo.id === id) {
-      return {
-        ...todo,
-        ...data,
-      };
-    }
-    return todo;
-  });
-  //todo : tách ra 1 function riêng nhé 
-  writeFileSync(
-    "./src/database/todos.json",
-    JSON.stringify({
-      data: todoUpdate,
-    })
-  );
+  const todoIndex = todos.findIndex((todo) => todo.id === Number(id));
+  const todo = todos.find((todo) => todo.id === Number(id));
+  const todoUpdate = { ...todo, ...data };
+  todos[todoIndex] = todoUpdate;
+  // const todoUpdate = todos.map((todo) => {
+  //   if (todo.id === id) {
+  //     return {
+  //       ...todo,
+  //       ...data,
+  //     };
+  //   }
+  //   return todo;
+  // });
+  todoWriteFileSync(todos);
   return {
     ...data,
     id: id,
@@ -58,12 +46,7 @@ function update(id, data) {
 
 function removeMany(id = []) {
   const todo = todos.filter((todo) => !id.includes(todo.id));
-  writeFileSync(
-    "./src/database/todos.json",
-    JSON.stringify({
-      data: todo,
-    })
-  );
+  todoWriteFileSync(todo);
 }
 
 function updateMany(id = []) {
@@ -76,12 +59,7 @@ function updateMany(id = []) {
     }
     return todo;
   });
-  writeFileSync(
-    "./src/database/todos.json",
-    JSON.stringify({
-      data: todoUpdate,
-    })
-  );
+  todoWriteFileSync(todoUpdate);
   return todoUpdate;
 }
 

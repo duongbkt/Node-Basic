@@ -1,6 +1,7 @@
 const fs = require("fs");
 const fieldHandle = require("../helpers/field");
 const { productWriteFileSync } = require("../helpers/fileSync");
+const sortProduct = require("../helpers/sortProduct");
 
 const { readFileSync } = fs;
 
@@ -10,41 +11,9 @@ const { data: products } = JSON.parse(
 
 function getAll(limit, sort) {
   if (limit) {
-    const data = products.slice(0, limit);
-    return data;
+    return products.slice(0, limit);
   }
-  if (sort) {
-
-    //todo: tách phần này sang 1 function riếng 
-    if (sort === "ASC") {
-      const data = products.sort(
-        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-      );
-      return data;
-    }
-    if (sort === "DESC") {
-      const data = products.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-      return data;
-    }
-  }
-  if ((limit, sort)) {
-    //todo: cái này bị thừa rồi , sắp xếp phần trên sao cho không cần sử dung phần này nhé , thêm vào nó bị thừa 
-    if (sort === "ASC") {
-      const data = products
-        .slice(0, limit)
-        .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-      return data;
-    }
-    if (sort === "DESC") {
-      const data = products
-        .slice(0, limit)
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      return data;
-    }
-  }
-  return products;
+  return sortProduct(limit, sort, products);
 }
 
 function add(data) {
@@ -55,7 +24,7 @@ function add(data) {
 function update(id, data) {
   const productIndex = products.findIndex(
     (pro) => Number(pro.id) === Number(id)
-  )
+  );
   const product = products.find((pro) => Number(pro.id) === Number(id));
   const productUpdate = { ...product, ...data };
   products[productIndex] = productUpdate;

@@ -14,6 +14,8 @@ function getAll(limit, sort) {
     return data;
   }
   if (sort) {
+
+    //todo: tách phần này sang 1 function riếng 
     if (sort === "ASC") {
       const data = products.sort(
         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
@@ -28,6 +30,7 @@ function getAll(limit, sort) {
     }
   }
   if ((limit, sort)) {
+    //todo: cái này bị thừa rồi , sắp xếp phần trên sao cho không cần sử dung phần này nhé , thêm vào nó bị thừa 
     if (sort === "ASC") {
       const data = products
         .slice(0, limit)
@@ -56,15 +59,6 @@ function update(id, data) {
   const product = products.find((pro) => Number(pro.id) === Number(id));
   const productUpdate = { ...product, ...data };
   products[productIndex] = productUpdate;
-  // const product = products.map((product) => {
-  //   if (product.id === Number(id)) {
-  //     return {
-  //       ...product,
-  //       ...data,
-  //     };
-  //   }
-  //   return product;
-  // });
   productWriteFileSync(productUpdate);
 }
 

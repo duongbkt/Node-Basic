@@ -14,7 +14,7 @@ const {
 async function getProducts(ctx) {
   try {
     const { limit, sort } = ctx.query;
-    const products = getAllProduct({ limit, sort });
+    const products = getAllProduct(limit, sort);
 
     ctx.body = {
       data: products,

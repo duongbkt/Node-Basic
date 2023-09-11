@@ -84,6 +84,7 @@ const ResourceListWithSelection = () => {
     {
       content: "Complete",
       onAction: () => handleUpdateManyTodos(selectedTodos),
+      disabled: !todos.map((i) => i.completed).includes(false),
     },
     {
       content: "Delete",

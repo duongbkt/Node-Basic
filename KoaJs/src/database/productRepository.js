@@ -65,8 +65,7 @@ function update(id, data) {
   //   }
   //   return product;
   // });
-  productWriteFileSync(products);
-  // trả về product đã update nhé 
+  productWriteFileSync(productUpdate);
 }
 
 function getOne(id, fields) {

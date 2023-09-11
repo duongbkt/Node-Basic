@@ -9,6 +9,7 @@ const { data: products } = JSON.parse(
 );
 
 function getAll() {
+  //todo: viết thêm phần limit với sort trong này cho anh nhé 
   return products;
 }
 
@@ -20,7 +21,7 @@ function add(data) {
 function update(id, data) {
   const productIndex = products.findIndex(
     (pro) => Number(pro.id) === Number(id)
-  );
+  )
   const product = products.find((pro) => Number(pro.id) === Number(id));
   const productUpdate = { ...product, ...data };
   products[productIndex] = productUpdate;
@@ -34,6 +35,7 @@ function update(id, data) {
   //   return product;
   // });
   productWriteFileSync(products);
+  // trả về product đã update nhé 
 }
 
 function getOne(id, fields) {

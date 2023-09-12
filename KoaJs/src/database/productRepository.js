@@ -10,6 +10,8 @@ const { data: products } = JSON.parse(
 );
 
 function getAll(limit, sort) {
+
+  // todo: cái này qua nói rồi mà nhỉ ? sort trc rồi mới limit 
   if (limit) {
     return products.slice(0, limit);
   }
@@ -26,6 +28,7 @@ function add(data) {
 
 function update(id, data) {
   const productIndex = products.findIndex(
+    // todo: anh không nghĩ là phỉa dùng Number đâu , cứ check như bt thôi , mấy cái khác cũng thế nhé 
     (pro) => Number(pro.id) === Number(id)
   );
   const product = products.find((pro) => Number(pro.id) === Number(id));
@@ -37,6 +40,7 @@ function update(id, data) {
 function getOne(id, fields) {
   const product = products.find((product) => product.id === Number(id));
   if (fields) {
+    //todo: đổi thành pickFields nhé 
     return fieldHandle(product, fields);
   }
   return product;

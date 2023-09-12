@@ -11,7 +11,7 @@ const { data: products } = JSON.parse(
 
 function getAll(limit, sort) {
   if (sort) {
-    sortProduct(limit, sort, products);
+    sortProduct(sort, products);
   }
   if (limit) {
     return products.slice(0, limit);

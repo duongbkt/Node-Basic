@@ -1,7 +1,7 @@
 const fs = require("fs");
-const fieldHandle = require("../helpers/field");
 const { productWriteFileSync } = require("../helpers/fileSync");
 const sortProduct = require("../helpers/sortProduct");
+const pickFields = require("../helpers/field");
 
 const { readFileSync } = fs;
 
@@ -10,14 +10,13 @@ const { data: products } = JSON.parse(
 );
 
 function getAll(limit, sort) {
-
-  // todo: cái này qua nói rồi mà nhỉ ? sort trc rồi mới limit 
-  if (limit) {
-    return products.slice(0, limit);
-  }
   if (sort) {
     sortProduct(limit, sort, products);
   }
+  if (limit) {
+    return products.slice(0, limit);
+  }
+
   return products;
 }
 
@@ -27,29 +26,23 @@ function add(data) {
 }
 
 function update(id, data) {
-  const productIndex = products.findIndex(
-    // todo: anh không nghĩ là phỉa dùng Number đâu , cứ check như bt thôi , mấy cái khác cũng thế nhé 
-    (pro) => Number(pro.id) === Number(id)
-  );
-  const product = products.find((pro) => Number(pro.id) === Number(id));
+  const productIndex = products.findIndex((pro) => pro.id === id);
+  const product = products.find((pro) => pro.id === id);
   const productUpdate = { ...product, ...data };
   products[productIndex] = productUpdate;
-  productWriteFileSync(productUpdate);
+  productWriteFileSync(products);
 }
 
 function getOne(id, fields) {
-  const product = products.find((product) => product.id === Number(id));
+  const product = products.find((product) => product.id === id);
   if (fields) {
-    //todo: đổi thành pickFields nhé 
-    return fieldHandle(product, fields);
+    return pickFields(product, fields);
   }
   return product;
 }
 
 function remove(id) {
-  const product = products.filter(
-    (product) => Number(product.id) !== Number(id)
-  );
+  const product = products.filter((product) => product.id !== id);
   productWriteFileSync(product);
 }
 

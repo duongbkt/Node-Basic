@@ -24,19 +24,10 @@ function remove(id) {
 }
 
 function update(id, data) {
-  const todoIndex = todos.findIndex((todo) => todo.id === Number(id));
-  const todo = todos.find((todo) => todo.id === Number(id));
+  const todoIndex = todos.findIndex((todo) => todo.id === id);
+  const todo = todos.find((todo) => todo.id === id);
   const todoUpdate = { ...todo, ...data };
   todos[todoIndex] = todoUpdate;
-  // const todoUpdate = todos.map((todo) => {
-  //   if (todo.id === id) {
-  //     return {
-  //       ...todo,
-  //       ...data,
-  //     };
-  //   }
-  //   return todo;
-  // });
   todoWriteFileSync(todos);
   return {
     ...data,

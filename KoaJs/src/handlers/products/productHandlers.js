@@ -54,7 +54,7 @@ async function update(ctx) {
   try {
     const postData = ctx.request.body;
     const { id } = ctx.params;
-    updateProduct(id, postData);
+    updateProduct(Number(id), postData);
 
     ctx.status = 201;
     return (ctx.body = {
@@ -91,7 +91,7 @@ async function getProduct(ctx) {
 async function removeProduct(ctx) {
   try {
     const { id } = ctx.params;
-    const product = getProduct(id);
+    const product = getProduct(Number(id));
     if (!product) {
       ctx.status = 404;
       ctx.body = "Product not found";

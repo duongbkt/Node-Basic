@@ -1,4 +1,4 @@
-const fieldHandle = (obj, fields) => {
+const pickFields = (obj, fields) => {
   const objNew = {};
   fields.map((field) => {
     if (obj[field]) {
@@ -8,4 +8,4 @@ const fieldHandle = (obj, fields) => {
   return objNew;
 };
 
-module.exports = fieldHandle;
+module.exports = pickFields;

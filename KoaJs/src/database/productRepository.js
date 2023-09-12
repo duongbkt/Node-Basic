@@ -13,7 +13,10 @@ function getAll(limit, sort) {
   if (limit) {
     return products.slice(0, limit);
   }
-  return sortProduct(limit, sort, products);
+  if (sort) {
+    sortProduct(limit, sort, products);
+  }
+  return products;
 }
 
 function add(data) {

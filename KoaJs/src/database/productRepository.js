@@ -21,7 +21,7 @@ function getAll(limit, sort) {
 }
 
 function add(data) {
-  const product = [data, ...products];
+      const product = [{id: Math.random(), ...data}, ...products];
   return productWriteFileSync(product);
 }
 

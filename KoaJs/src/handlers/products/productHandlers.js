@@ -32,6 +32,7 @@ async function getProducts(ctx) {
 async function save(ctx) {
   try {
     const postData = ctx.request.body;
+    //todo: genId trong repository em nhé 
     addProduct({
       id: Math.random(),
       createdAt: new Date().toISOString(),

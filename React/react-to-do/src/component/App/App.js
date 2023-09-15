@@ -1,27 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
-import TodoForm from "./component/Form";
-import Todo from "./component/Todo";
-import { addTodo, deleteTodo, getTodo, updateTodo } from "./api/todo";
+import TodoForm from "../Form";
+import Todo from "../Todo";
+import { addTodo, deleteTodo, updateTodo } from "../../api/todo";
+import useFetchData from "../../hooks/useFetchData";
 
 function App() {
-  const [todos, setTodos] = useState([]);
   const [value, setValue] = useState("");
-
-  useEffect(() => {
-    const getTodos = async () => {
-      const { data } = await getTodo();
-      setTodos(data.data);
-    };
-    getTodos();
-  }, []);
+  const { data: todos, setData: setTodos } = useFetchData();
 
   const completeTodo = async (id, todo) => {
     const { data } = await updateTodo(id, {
       ...todo,
       completed: !todo.completed,
     });
-    setTodos(todos.map((item) => (item.id === data.data.id ? data.data : item)));
+    setTodos(
+      todos.map((item) => (item.id === data.data.id ? data.data : item))
+    );
   };
 
   const onHandleRemoveTodo = (id) => {
@@ -34,10 +29,14 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!value) return;
-    const { data } = await addTodo({ title: value });
-    setTodos([...todos, data.data]);
-    setValue("");
+    try {
+      if (!value) return;
+      const { data } = await addTodo({ title: value.trim() });
+      setTodos(data.data);
+      setValue("");
+    } catch (error) {
+      alert("Can not be empty");
+    }
   };
 
   return (

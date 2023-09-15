@@ -6,7 +6,9 @@ const Todo = ({ todo, completeTodo, removeTodo }) => {
     >
       {todo.title}
       <div>
-        <button onClick={() => completeTodo(todo.id, todo)}>Complete</button>
+        <button onClick={() => completeTodo(todo.id, todo)}>
+          {todo.completed === false ? "Complete" : "Un Complete"}
+        </button>
         <button onClick={() => removeTodo(todo.id)}>x</button>
       </div>
     </div>

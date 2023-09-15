@@ -1,12 +1,21 @@
-const TodoForm = ({ handleSubmit, value, setValue}) => {
+const TodoForm = ({ handleSubmit, value, setValue }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        className="input"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <input
+          type="text"
+          className="input"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+        <button onClick={handleSubmit}>Create</button>
+      </div>
     </form>
   );
 };

@@ -23,7 +23,12 @@ const ModalAddTodo = ({ active, handleChange, handleSubmit }) => {
         ]}
       >
         <Modal.Section>
-          <Form onSubmit={handleSubmit}>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit(value, setValue);
+            }}
+          >
             <FormLayout>
               <TextField value={value} onChange={handleTodoChange} />
             </FormLayout>

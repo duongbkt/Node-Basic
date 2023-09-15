@@ -1,4 +1,4 @@
-import { TopBar, Frame, DropZone } from "@shopify/polaris";
+import { TopBar, Frame } from "@shopify/polaris";
 import { useState, useCallback } from "react";
 
 export const Header = () => {

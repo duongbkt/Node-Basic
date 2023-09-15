@@ -1,7 +1,7 @@
+import { Header } from "../Header";
+import ResourceListWithSelection from "../ResourceListWithSelection";
 import "./App.css";
-import { Header } from "./components/Header";
 
-import ResourceListWithSelection from "./components/ResourceListWithSelection";
 
 function App() {
   return (

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ResourceList,
   ResourceItem,
@@ -12,29 +12,22 @@ import {
 import {
   addTodo,
   deleteTodo,
-  getTodo,
   removeMany,
   updateMany,
   updateTodo,
 } from "../api/todo";
 import HeaderBottom from "./HeaderBottom";
+import useFetchData from "../hooks/useFetchData";
 
 const ResourceListWithSelection = () => {
   const [selectedTodos, setSelectedTodos] = useState([]);
-  const [todos, setTodos] = useState([]);
   const [active, setActive] = useState(false);
   const [checked, setChecked] = useState(false);
   const handleChange = useCallback((newChecked) => setChecked(newChecked), []);
 
-  const handleOpenModal = useCallback(() => setActive(!active), [active]);
+  const { data: todos, setData: setTodos } = useFetchData();
 
-  useEffect(() => {
-    const getTodos = async () => {
-      const { data } = await getTodo();
-      setTodos(data.data);
-    };
-    getTodos();
-  }, []);
+  const handleOpenModal = useCallback(() => setActive(!active), [active]);
 
   const onHandleRemoveTodo = (id) => {
     const confirm = window.confirm("Are you sure delete???");
@@ -45,10 +38,14 @@ const ResourceListWithSelection = () => {
   };
 
   const handleAddTodo = async (value, setValue) => {
-    const { data } = await addTodo({ title: value });
-    setTodos([...todos, data.data]);
-    setActive(false);
-    setValue("");
+    try {
+      const { data } = await addTodo({ title: value });
+      setTodos(data.data);
+      setActive(false);
+      setValue("");
+    } catch (error) {
+      alert("Not empty");
+    }
   };
 
   const completeTodo = async (id, todo) => {

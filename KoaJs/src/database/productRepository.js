@@ -9,15 +9,18 @@ const { data: products } = JSON.parse(
   readFileSync("./src/database/products.json", "utf-8")
 );
 
-function getAll(limit, sort) {
+function getAll({limit, sort}) {
+  const result = [...products];
+
   if (sort) {
-    sortProduct(sort, products);
+    result  = sortProduct(sort, result);
+    // mutate
   }
   if (limit) {
-    return products.slice(0, limit);
+    result =  result.slice(0, limit);
   }
 
-  return products;
+  return result;
 }
 
 function add(data) {
@@ -42,8 +45,8 @@ function getOne(id, fields) {
 }
 
 function remove(id) {
-  const product = products.filter((product) => product.id !== id);
-  productWriteFileSync(product);
+  const products = products.filter((product) => product.id !== id);
+  productWriteFileSync(products);
 }
 
 module.exports = {

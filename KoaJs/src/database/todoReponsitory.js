@@ -15,7 +15,7 @@ function getAll() {
 function add(data) {
   const updateTodo = [{ id: faker.number.int(), ...data }, ...todos];
   todoWriteFileSync(updateTodo);
-  return data;
+  return updateTodo;
 }
 
 function remove(id) {

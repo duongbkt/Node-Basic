@@ -1,6 +1,7 @@
 import instance from "./instance";
 
 export const getTodo = () => {
+  //todo : này là path không nên đặt là url 
   const url = "/todos";
   return instance.get(url);
 };

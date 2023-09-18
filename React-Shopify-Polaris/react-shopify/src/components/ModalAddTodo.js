@@ -14,6 +14,7 @@ const ModalAddTodo = ({ active, handleChange, handleSubmit }) => {
         primaryAction={{
           content: "Create",
           onAction: () => handleSubmit(value, setValue),
+          disabled: !value.trim()
         }}
         secondaryActions={[
           {
@@ -30,7 +31,11 @@ const ModalAddTodo = ({ active, handleChange, handleSubmit }) => {
             }}
           >
             <FormLayout>
-              <TextField value={value} onChange={handleTodoChange} />
+              <TextField
+                value={value}
+                onChange={handleTodoChange}
+                error={!value.trim() && "Todo name is required"}
+              />
             </FormLayout>
           </Form>
         </Modal.Section>

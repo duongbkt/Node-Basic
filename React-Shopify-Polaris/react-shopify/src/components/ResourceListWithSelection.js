@@ -44,7 +44,7 @@ const ResourceListWithSelection = () => {
       setActive(false);
       setValue("");
     } catch (error) {
-      alert("Not empty");
+      console.log(error);
     }
   };
 

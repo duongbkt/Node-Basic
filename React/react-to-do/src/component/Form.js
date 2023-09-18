@@ -4,7 +4,7 @@ const TodoForm = ({ handleSubmit, value, setValue }) => {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           alignItems: "center",
         }}
       >
@@ -14,8 +14,16 @@ const TodoForm = ({ handleSubmit, value, setValue }) => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
-        <button onClick={handleSubmit}>Create</button>
+
+        <button
+          style={{ position: "relative", right: "10px" }}
+          disabled={value.trim() === ""}
+          onClick={handleSubmit}
+        >
+          Create
+        </button>
       </div>
+      {value && value.trim() === "" && <p style={{ color: "red" }}>not empty</p>}
     </form>
   );
 };

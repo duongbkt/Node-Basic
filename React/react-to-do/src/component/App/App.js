@@ -7,16 +7,22 @@ import useFetchData from "../../hooks/useFetchData";
 
 function App() {
   const [value, setValue] = useState("");
+  const [empty, setEmpty] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(false);
   const { data: todos, setData: setTodos } = useFetchData();
 
   const completeTodo = async (id, todo) => {
-    const { data } = await updateTodo(id, {
-      ...todo,
-      completed: !todo.completed,
-    });
-    setTodos(
-      todos.map((item) => (item.id === data.data.id ? data.data : item))
-    );
+    try {
+      setLoadingButton(true);
+      const { data } = await updateTodo(id, {
+        ...todo,
+        completed: !todo.completed,
+      });
+      setLoadingButton(false);
+      setTodos(
+        todos.map((item) => (item.id === data.data.id ? data.data : item))
+      );
+    } catch (error) {}
   };
 
   const onHandleRemoveTodo = (id) => {
@@ -35,7 +41,7 @@ function App() {
       setTodos(data.data);
       setValue("");
     } catch (error) {
-      alert("Can not be empty");
+      setEmpty(true);
     }
   };
 
@@ -48,12 +54,15 @@ function App() {
             todo={todo}
             completeTodo={completeTodo}
             removeTodo={onHandleRemoveTodo}
+            loadingButton={loadingButton}
           />
         ))}
         <TodoForm
           value={value}
           handleSubmit={handleSubmit}
           setValue={setValue}
+          empty={empty}
+          setEmpty={setEmpty}
         />
       </div>
     </div>

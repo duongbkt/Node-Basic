@@ -1,4 +1,4 @@
-const Todo = ({ todo, completeTodo, removeTodo }) => {
+const Todo = ({ todo, completeTodo, removeTodo, loadingButton }) => {
   return (
     <div
       className="todo"
@@ -6,7 +6,10 @@ const Todo = ({ todo, completeTodo, removeTodo }) => {
     >
       {todo.title}
       <div>
-        <button onClick={() => completeTodo(todo.id, todo)}>
+        <button
+          disabled={loadingButton}
+          onClick={() => completeTodo(todo.id, todo)}
+        >
           {todo.completed === false ? "Complete" : "Un Complete"}
         </button>
         <button onClick={() => removeTodo(todo.id)}>x</button>

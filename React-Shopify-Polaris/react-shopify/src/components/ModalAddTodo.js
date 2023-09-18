@@ -34,7 +34,7 @@ const ModalAddTodo = ({ active, handleChange, handleSubmit }) => {
               <TextField
                 value={value}
                 onChange={handleTodoChange}
-                error={!value.trim() && "Todo name is required"}
+                helpText={value && !value.trim() && <p style={{color:"red"}}>Todo name is required</p>}
               />
             </FormLayout>
           </Form>

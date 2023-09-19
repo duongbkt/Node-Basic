@@ -33,7 +33,7 @@ async function save(ctx) {
       ...postData,
     });
 
-    ctx.status = 201;
+    ctx.status = 200;
     return (ctx.body = {
       success: true,
       data: todo,
@@ -55,7 +55,9 @@ async function removeTodo(ctx) {
       return;
     }
     remove(Number(id));
-    ctx.body = "Deleted";
+    ctx.body = {
+      success: true,
+    };
   } catch (e) {
     ctx.status = 404;
     return (ctx.body = {

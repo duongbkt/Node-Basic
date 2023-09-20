@@ -6,24 +6,17 @@ import {
   Card,
   Stack,
   Button,
-  Checkbox,
   Badge,
+  Page,
 } from "@shopify/polaris";
-import {
-  addTodo,
-  deleteTodo,
-  removeMany,
-  updateMany,
-  updateTodo,
-} from "../api/todo";
-import HeaderBottom from "./HeaderBottom";
+import { addTodo, deleteTodo, updateTodo } from "../api/todo";
 import useFetchData from "../hooks/useFetchData";
+import ModalAddTodo from "./ModalAddTodo";
 
 const ResourceListWithSelection = () => {
   const [selectedTodos, setSelectedTodos] = useState([]);
   const [active, setActive] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const handleChange = useCallback((newChecked) => setChecked(newChecked), []);
+  const [loading, setLoading] = useState(false);
 
   const { data: todos, setData: setTodos } = useFetchData();
 
@@ -32,7 +25,7 @@ const ResourceListWithSelection = () => {
   const onHandleRemoveTodo = (id) => {
     const confirm = window.confirm("Are you sure delete???");
     if (confirm) {
-      deleteTodo(id);
+      deleteTodo([id]);
       setTodos(todos.filter((todo) => todo.id !== id));
     }
   };
@@ -48,26 +41,30 @@ const ResourceListWithSelection = () => {
     }
   };
 
-  const completeTodo = async (id, todo) => {
-    const { data } = await updateTodo(id, {
-      ...todo,
-      completed: !todo.completed,
-    });
-    setTodos(
-      todos.map((item) => (item.id === Number(data.data.id) ? data.data : item))
-    );
+  const completeTodo = async (id) => {
+    try {
+      setLoading(true);
+      const { data } = await updateTodo([id]);
+      setTodos([...data.todo]);
+      setSelectedTodos([]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleRemoveManyTodos = async (selectedTodos) => {
     const confirm = window.confirm("Are you sure delete???");
     if (confirm) {
-      removeMany({ id: selectedTodos });
+      deleteTodo(selectedTodos);
       setTodos(todos.filter((todo) => !selectedTodos.includes(todo.id)));
     }
   };
 
   const handleUpdateManyTodos = async (selectedTodos) => {
-    const { data } = await updateMany({ id: selectedTodos });
+    const { data } = await updateTodo(selectedTodos);
     setTodos([...data.todo]);
     setSelectedTodos([]);
   };
@@ -90,14 +87,14 @@ const ResourceListWithSelection = () => {
   ];
 
   return (
-    //todo : bỏ <><>
-    <>
-      <HeaderBottom
-        handleSubmit={handleAddTodo}
-        setActive={setActive}
-        handleOpenModal={handleOpenModal}
-        active={active}
-      />
+    <Page
+      title="Todos"
+      primaryAction={{
+        content: "Create todo",
+        onAction: () => handleOpenModal(),
+      }}
+      fullWidth
+    >
       <Card>
         <ResourceList
           resourceName={resourceName}
@@ -106,18 +103,14 @@ const ResourceListWithSelection = () => {
           selectedItems={selectedTodos}
           onSelectionChange={setSelectedTodos}
           promotedBulkActions={promotedBulkActions}
-          alternateTool={
-            <div className="checkbox-selected">
-              <Checkbox
-                label="Select"
-                checked={checked}
-                onChange={handleChange}
-              />
-            </div>
-          }
         />
       </Card>
-    </>
+      <ModalAddTodo
+        active={active}
+        handleSubmit={handleAddTodo}
+        handleChange={handleOpenModal}
+      />
+    </Page>
   );
 
   function renderItem(todo) {
@@ -136,7 +129,9 @@ const ResourceListWithSelection = () => {
                 {completed ? "done" : "pending"}
               </Badge>
             </div>
-            <Button onClick={() => completeTodo(id, todo)}>Complete</Button>
+            <Button loading={loading} onClick={() => completeTodo(id, todo)}>
+              Complete
+            </Button>
             <Button destructive onClick={() => onHandleRemoveTodo(id)}>
               Delete
             </Button>

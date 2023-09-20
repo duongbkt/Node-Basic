@@ -23,11 +23,8 @@ const ResourceListWithSelection = () => {
   const handleOpenModal = useCallback(() => setActive(!active), [active]);
 
   const onHandleRemoveTodo = (id) => {
-    const confirm = window.confirm("Are you sure delete???");
-    if (confirm) {
-      deleteTodo([id]);
-      setTodos(todos.filter((todo) => todo.id !== id));
-    }
+    deleteTodo([id]);
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   const handleAddTodo = async (value, setValue) => {
@@ -56,17 +53,30 @@ const ResourceListWithSelection = () => {
   };
 
   const handleRemoveManyTodos = async (selectedTodos) => {
-    const confirm = window.confirm("Are you sure delete???");
-    if (confirm) {
+    try {
+      setLoading(true);
       deleteTodo(selectedTodos);
       setTodos(todos.filter((todo) => !selectedTodos.includes(todo.id)));
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleUpdateManyTodos = async (selectedTodos) => {
-    const { data } = await updateTodo(selectedTodos);
-    setTodos([...data.todo]);
-    setSelectedTodos([]);
+    try {
+      setLoading(true);
+      const { data } = await updateTodo(selectedTodos);
+      setTodos([...data.todo]);
+      setSelectedTodos([]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const resourceName = {
@@ -103,6 +113,12 @@ const ResourceListWithSelection = () => {
           selectedItems={selectedTodos}
           onSelectionChange={setSelectedTodos}
           promotedBulkActions={promotedBulkActions}
+          emptyState={
+            <p style={{ color: "red", textAlign: "center", padding: "5px" }}>
+              no data
+            </p>
+          }
+          loading={loading}
         />
       </Card>
       <ModalAddTodo
@@ -132,7 +148,11 @@ const ResourceListWithSelection = () => {
             <Button disabled={loading} onClick={() => completeTodo(id, todo)}>
               Complete
             </Button>
-            <Button destructive onClick={() => onHandleRemoveTodo(id)}>
+            <Button
+              disabled={loading}
+              destructive
+              onClick={() => onHandleRemoveTodo(id)}
+            >
               Delete
             </Button>
           </div>

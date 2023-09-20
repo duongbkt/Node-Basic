@@ -1,10 +1,16 @@
 import { Form, FormLayout, Modal, TextField } from "@shopify/polaris";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const ModalAddTodo = ({ active, handleChange, handleSubmit }) => {
   const [value, setValue] = useState("");
 
   const handleTodoChange = useCallback((value) => setValue(value), []);
+  useEffect(() => {
+    if (!active) {
+      setValue("");
+    }
+  }, [active]);
+
   return (
     <Modal
       open={active}

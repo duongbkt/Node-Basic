@@ -129,7 +129,7 @@ const ResourceListWithSelection = () => {
                 {completed ? "done" : "pending"}
               </Badge>
             </div>
-            <Button loading={loading} onClick={() => completeTodo(id, todo)}>
+            <Button disabled={loading} onClick={() => completeTodo(id, todo)}>
               Complete
             </Button>
             <Button destructive onClick={() => onHandleRemoveTodo(id)}>

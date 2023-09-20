@@ -18,6 +18,7 @@ function add(data) {
   return updateTodo;
 }
 
+//todo: remove + update chỉ cần dùng 1 hàm repo là có thể dùng cho 2 hàm controller rồi , không cần viết 2 hàm riêng biệt đâu 
 function remove(id) {
   const todo = todos.filter((todo) => todo.id !== id);
   todoWriteFileSync(todo);

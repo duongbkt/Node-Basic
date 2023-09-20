@@ -3,6 +3,7 @@ import ModalAddTodo from "./ModalAddTodo";
 
 const HeaderBottom = ({ handleSubmit, setActive, handleOpenModal, active }) => {
   return (
+    //todo : dùng component của polaris hạn chế sử dùng custom component
     <>
       <div className="header-bottom">
         <h1>Todoes</h1>

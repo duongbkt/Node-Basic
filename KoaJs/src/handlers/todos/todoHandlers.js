@@ -7,7 +7,7 @@ const {
   updateMany,
 } = require("../../database/todoReponsitory");
 
-//todo: phần này đãng nhé ra phải pass đc bài koajs basic mới làm đấy , tuy nhiên anh vẫn review qua nhé
+
 
 async function getTodos(ctx) {
   try {

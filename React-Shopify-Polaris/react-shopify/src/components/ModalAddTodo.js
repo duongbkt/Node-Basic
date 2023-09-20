@@ -6,6 +6,7 @@ const ModalAddTodo = ({ active, handleChange, handleSubmit }) => {
 
   const handleTodoChange = useCallback((value) => setValue(value), []);
   return (
+    //todo: bỏ div đi , cố gắng dùng component của polaris
     <div>
       <Modal
         open={active}
@@ -34,6 +35,7 @@ const ModalAddTodo = ({ active, handleChange, handleSubmit }) => {
               <TextField
                 value={value}
                 onChange={handleTodoChange}
+                //todo: không dùng helptext dùng error 
                 helpText={value && !value.trim() && <p style={{color:"red"}}>Todo name is required</p>}
               />
             </FormLayout>

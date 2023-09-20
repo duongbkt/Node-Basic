@@ -3,11 +3,7 @@ const {
   remove,
   add: addTodo,
   update: updateTodo,
-  removeMany,
-  updateMany,
 } = require("../../database/todoReponsitory");
-
-
 
 async function getTodos(ctx) {
   try {
@@ -48,13 +44,13 @@ async function save(ctx) {
 
 async function removeTodo(ctx) {
   try {
-    const { id } = ctx.params;
+    const id = ctx.request.body;
     if (!id) {
       ctx.status = 404;
       ctx.body = "Product not found";
       return;
     }
-    remove(Number(id));
+    remove(id || []);
     ctx.body = {
       success: true,
     };
@@ -69,51 +65,13 @@ async function removeTodo(ctx) {
 
 async function update(ctx) {
   try {
-    const postData = ctx.request.body;
-    const { id } = ctx.params;
-    const todo = updateTodo(Number(id), postData);
-
-    ctx.status = 201;
-    return (ctx.body = {
-      success: true,
-      data: todo,
-    });
-  } catch (e) {
-    return (ctx.body = {
-      success: false,
-      error: e.message,
-    });
-  }
-}
-
-async function removeManyTodo(ctx) {
-  try {
-    const { id } = ctx.request.body;
+    const id = ctx.request.body;
     if (!id) {
       ctx.status = 404;
       ctx.body = "Product not found";
       return;
     }
-    removeMany(id || []);
-    ctx.body = "Deleted";
-  } catch (e) {
-    ctx.status = 404;
-    return (ctx.body = {
-      success: false,
-      error: e.message,
-    });
-  }
-}
-
-async function updateManyTodo(ctx) {
-  try {
-    const { id } = ctx.request.body;
-    if (!id) {
-      ctx.status = 404;
-      ctx.body = "Product not found";
-      return;
-    }
-    const todo = updateMany(id);
+    const todo = updateTodo(id);
     return (ctx.body = {
       success: true,
       todo,
@@ -127,11 +85,11 @@ async function updateManyTodo(ctx) {
   }
 }
 
+
+
 module.exports = {
   getTodos,
   removeTodo,
   save,
   update,
-  removeManyTodo,
-  updateManyTodo,
 };

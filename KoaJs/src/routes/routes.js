@@ -16,11 +16,10 @@ router.get("/product/:id", productHandler.getProduct);
 router.delete("/product/:id", productHandler.removeProduct);
 
 // Routes todos
+router.post("/todo", todoHandler.removeTodo);
+router.put("/todo", todoHandler.update);
 router.get("/todos", todoHandler.getTodos);
-router.put("/todo/:id", todoHandler.update);
 router.post("/todos", todoInputMiddleware, todoHandler.save);
-router.post("/todo", todoHandler.removeManyTodo);
-router.delete("/todo/:id", todoHandler.removeTodo);
-router.put("/todo", todoHandler.updateManyTodo);
+
 
 module.exports = router;

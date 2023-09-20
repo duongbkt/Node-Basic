@@ -18,41 +18,24 @@ function add(data) {
   return updateTodo;
 }
 
-//todo: remove + update chỉ cần dùng 1 hàm repo là có thể dùng cho 2 hàm controller rồi , không cần viết 2 hàm riêng biệt đâu 
 function remove(id) {
-  const todo = todos.filter((todo) => todo.id !== id);
-  todoWriteFileSync(todo);
-}
-
-function update(id, data) {
-  const todoIndex = todos.findIndex((todo) => todo.id === id);
-  const todo = todos.find((todo) => todo.id === id);
-  const todoUpdate = { ...todo, ...data };
-  todos[todoIndex] = todoUpdate;
-  todoWriteFileSync(todos);
-  return {
-    ...data,
-    id: id,
-  };
-}
-
-function removeMany(id = []) {
   const todo = todos.filter((todo) => !id.includes(todo.id));
   todoWriteFileSync(todo);
 }
 
-function updateMany(id = []) {
+function update(id=[]) {
   const todoUpdate = todos.map((todo) => {
     if (id.includes(todo.id)) {
       return {
         ...todo,
-        completed: true,
+        completed: !todo.completed,
       };
     }
     return todo;
   });
   todoWriteFileSync(todoUpdate);
   return todoUpdate;
+
 }
 
 module.exports = {
@@ -60,6 +43,4 @@ module.exports = {
   add,
   update,
   remove,
-  removeMany,
-  updateMany,
 };

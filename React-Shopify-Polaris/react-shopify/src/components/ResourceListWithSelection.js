@@ -8,6 +8,7 @@ import {
   Button,
   Badge,
   Page,
+  EmptyState,
 } from "@shopify/polaris";
 import { addTodo, deleteTodo, updateTodo } from "../api/todo";
 import useFetchData from "../hooks/useFetchData";
@@ -96,6 +97,12 @@ const ResourceListWithSelection = () => {
     },
   ];
 
+  const EmptyStateMarkup = () => {
+    return (
+      <EmptyState image="https://www.kpriet.ac.in/asset/frontend/images/nodata.png" />
+    );
+  };
+
   return (
     <Page
       title="Todos"
@@ -113,11 +120,7 @@ const ResourceListWithSelection = () => {
           selectedItems={selectedTodos}
           onSelectionChange={setSelectedTodos}
           promotedBulkActions={promotedBulkActions}
-          emptyState={
-            <p style={{ color: "red", textAlign: "center", padding: "5px" }}>
-              no data
-            </p>
-          }
+          emptyState={<EmptyStateMarkup />}
           loading={loading}
         />
       </Card>
@@ -138,13 +141,10 @@ const ResourceListWithSelection = () => {
           <TextStyle variant="bodyMd" fontWeight="bold" as="h3">
             {title}
           </TextStyle>
-
-          <div className="handleButton">
-            <div className="status">
-              <Badge status={completed ? "success" : ""}>
-                {completed ? "done" : "pending"}
-              </Badge>
-            </div>
+          <Stack alignment="center">
+            <Badge status={completed ? "success" : ""}>
+              {completed ? "done" : "pending"}
+            </Badge>
             <Button disabled={loading} onClick={() => completeTodo(id, todo)}>
               Complete
             </Button>
@@ -155,7 +155,7 @@ const ResourceListWithSelection = () => {
             >
               Delete
             </Button>
-          </div>
+          </Stack>
         </Stack>
       </ResourceItem>
     );

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 
 const ModalAddTodo = ({ active, handleChange, handleSubmit }) => {
   const [value, setValue] = useState("");
+  const hasError = value && !value.trim();
 
   const handleTodoChange = useCallback((value) => setValue(value), []);
   useEffect(() => {
@@ -40,10 +41,7 @@ const ModalAddTodo = ({ active, handleChange, handleSubmit }) => {
               value={value}
               onChange={handleTodoChange}
               error={
-                value &&
-                !value.trim() && (
-                  <p style={{ color: "red" }}>Todo name is required</p>
-                )
+                hasError && "Input mustn't be blank"
               }
             />
           </FormLayout>

@@ -50,9 +50,10 @@ async function removeTodo(ctx) {
       ctx.body = "Product not found";
       return;
     }
-    remove(id || []);
+    const products = remove(id || []);
     ctx.body = {
       success: true,
+      data: products,
     };
   } catch (e) {
     ctx.status = 404;
@@ -84,8 +85,6 @@ async function update(ctx) {
     });
   }
 }
-
-
 
 module.exports = {
   getTodos,

@@ -21,6 +21,7 @@ function add(data) {
 function remove(id) {
   const todo = todos.filter((todo) => !id.includes(todo.id));
   todoWriteFileSync(todo);
+  return todo
 }
 
 function update(id=[]) {

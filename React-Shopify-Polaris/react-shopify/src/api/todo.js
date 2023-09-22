@@ -1,8 +1,7 @@
 import instance from "./instance";
 
-export const getTodo = () => {
-  const url = "/todos";
-  return instance.get(url);
+export const getTodo = (path) => {
+  return instance.get(path);
 };
 
 // export const deleteTodo = (id) => {

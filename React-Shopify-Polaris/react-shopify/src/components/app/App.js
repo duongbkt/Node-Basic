@@ -1,17 +1,8 @@
-import { Header } from "../Header";
-import ResourceListWithSelection from "../ResourceListWithSelection";
 import "./App.css";
-
+import FrameExample from "../Frame";
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-      <div className="content">
-        <ResourceListWithSelection />
-      </div>
-    </div>
-  );
+  return <FrameExample />;
 }
 
 export default App;

@@ -19,13 +19,15 @@ const ResourceListWithSelection = () => {
   const [active, setActive] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { data: todos, setData: setTodos } = useFetchData();
+  const { data: todos, setData: setTodos } = useFetchData("/todos");
 
   const handleOpenModal = useCallback(() => setActive(!active), [active]);
 
-  const onHandleRemoveTodo = (id) => {
-    deleteTodo([id]);
-    setTodos(todos.filter((todo) => todo.id !== id));
+  const onHandleRemoveTodo = async (id) => {
+    const { data } = await deleteTodo([id]);
+    if (data.success) {
+      setTodos(data.data);
+    }
   };
 
   const handleAddTodo = async (value, setValue) => {
@@ -110,7 +112,6 @@ const ResourceListWithSelection = () => {
         content: "Create todo",
         onAction: () => handleOpenModal(),
       }}
-      fullWidth
     >
       <Card>
         <ResourceList

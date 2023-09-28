@@ -9,6 +9,7 @@ import {
   Badge,
   Page,
   EmptyState,
+  Layout,
 } from "@shopify/polaris";
 import { addTodo, deleteTodo, updateTodo } from "../api/todo";
 import useFetchData from "../hooks/useFetchData";
@@ -45,7 +46,7 @@ const ResourceListWithSelection = () => {
     try {
       setLoading(true);
       const { data } = await updateTodo([id]);
-      setTodos([...data.todo]);
+      setTodos(data.todo);
       setSelectedTodos([]);
       setLoading(false);
     } catch (error) {
@@ -59,7 +60,7 @@ const ResourceListWithSelection = () => {
     try {
       setLoading(true);
       deleteTodo(selectedTodos);
-      setTodos(todos.filter((todo) => !selectedTodos.includes(todo.id)));
+      setTodos(prevTodos => prevTodos.filter((todo) => !selectedTodos.includes(todo.id)));
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -72,7 +73,7 @@ const ResourceListWithSelection = () => {
     try {
       setLoading(true);
       const { data } = await updateTodo(selectedTodos);
-      setTodos([...data.todo]);
+      setTodos(data.todo);
       setSelectedTodos([]);
       setLoading(false);
     } catch (error) {
@@ -113,18 +114,20 @@ const ResourceListWithSelection = () => {
         onAction: () => handleOpenModal(),
       }}
     >
-      <Card>
-        <ResourceList
-          resourceName={resourceName}
-          items={todos}
-          renderItem={renderItem}
-          selectedItems={selectedTodos}
-          onSelectionChange={setSelectedTodos}
-          promotedBulkActions={promotedBulkActions}
-          emptyState={<EmptyStateMarkup />}
-          loading={loading}
-        />
-      </Card>
+      <Layout sectioned>
+        <Card>
+          <ResourceList
+            resourceName={resourceName}
+            items={todos}
+            renderItem={renderItem}
+            selectedItems={selectedTodos}
+            onSelectionChange={setSelectedTodos}
+            promotedBulkActions={promotedBulkActions}
+            emptyState={<EmptyStateMarkup />}
+            loading={loading}
+          />
+        </Card>
+      </Layout>
       <ModalAddTodo
         active={active}
         handleSubmit={handleAddTodo}

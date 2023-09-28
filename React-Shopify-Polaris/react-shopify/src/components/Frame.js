@@ -1,20 +1,10 @@
-import { AppProvider, Frame, TopBar } from "@shopify/polaris";
+import { Frame, TopBar } from "@shopify/polaris";
 import ResourceListWithSelection from "./ResourceListWithSelection";
 
-function FrameExample() {
-  const userMenuActions = [
-    {
-      items: [{ content: "Community forums" }],
-    },
-  ];
+function FrameLayout() {
+  const userMenuMarkup = <TopBar.UserMenu name="Dharma" initials="D" />;
 
-  const userMenuMarkup = (
-    <TopBar.UserMenu actions={userMenuActions} name="Dharma" initials="D" />
-  );
-
-  const topBarMarkup = (
-    <TopBar showNavigationToggle userMenu={userMenuMarkup} />
-  );
+  const topBarMarkup = <TopBar userMenu={userMenuMarkup} />;
 
   return (
     <div style={{ height: "500px" }}>
@@ -25,4 +15,4 @@ function FrameExample() {
   );
 }
 
-export default FrameExample;
+export default FrameLayout;

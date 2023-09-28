@@ -1,8 +1,8 @@
+import FrameLayout from "../Frame";
 import "./App.css";
-import FrameExample from "../Frame";
 
 function App() {
-  return <FrameExample />;
+  return <FrameLayout />;
 }
 
 export default App;

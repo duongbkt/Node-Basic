@@ -47,8 +47,10 @@ const ResourceListWithSelection = () => {
       setLoading(true);
       await updateTodo(todo);
       setTodos((prevTodos) =>
-        prevTodos.map((res) =>
-          res.id === todo.id ? { ...todo, completed: !todo.completed } : res
+        prevTodos.map((prevTodo) =>
+        prevTodo.id === todo.id
+            ? { ...todo, completed: !todo.completed }
+            : prevTodo
         )
       );
       setSelectedTodos([]);
@@ -80,10 +82,10 @@ const ResourceListWithSelection = () => {
       setLoading(true);
       await updateTodo(todos.filter((todo) => selectedTodos.includes(todo.id)));
       setTodos((prevTodos) =>
-        prevTodos.map((res) =>
-          selectedTodos.includes(res.id)
-            ? { ...res, completed: !res.completed }
-            : res
+        prevTodos.map((todo) =>
+          selectedTodos.includes(todo.id)
+            ? { ...todo, completed: !todo.completed }
+            : todo
         )
       );
       setSelectedTodos([]);

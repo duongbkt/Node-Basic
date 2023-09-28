@@ -9,15 +9,15 @@ const { data: products } = JSON.parse(
   readFileSync("./src/database/products.json", "utf-8")
 );
 
-function getAll({limit, sort}) {
-  const result = [...products];
+function getAll(limit, sort) {
+  let result = [...products];
 
   if (sort) {
     result  = sortProduct(sort, result);
     // mutate
   }
   if (limit) {
-    result =  result.slice(0, limit);
+    result = result.slice(0, limit);
   }
 
   return result;

@@ -25,9 +25,15 @@ const ResourceListWithSelection = () => {
   const handleOpenModal = useCallback(() => setActive(!active), [active]);
 
   const onHandleRemoveTodo = async (id) => {
-    const { data } = await deleteTodo([id]);
-    if (data.success) {
-      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    try {
+      setLoading(true);
+      const { data } = await deleteTodo([id]);
+      if (data.success) {
+        setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
   };
 
@@ -48,7 +54,7 @@ const ResourceListWithSelection = () => {
       await updateTodo(todo);
       setTodos((prevTodos) =>
         prevTodos.map((prevTodo) =>
-        prevTodo.id === todo.id
+          prevTodo.id === todo.id
             ? { ...todo, completed: !todo.completed }
             : prevTodo
         )
@@ -162,11 +168,11 @@ const ResourceListWithSelection = () => {
             <Badge status={completed ? "success" : ""}>
               {completed ? "done" : "pending"}
             </Badge>
-            <Button disabled={loading} onClick={() => completeTodo(todo)}>
+            <Button loading={loading} onClick={() => completeTodo(todo)}>
               Complete
             </Button>
             <Button
-              disabled={loading}
+              loading={loading}
               destructive
               onClick={() => onHandleRemoveTodo(id)}
             >

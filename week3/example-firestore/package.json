@@ -4,13 +4,16 @@
   "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon dist/app.js "
+    "dev": "nodemon dist/app.js babel src --out-dir dist --watch",
+    "watch": "babel src --out-dir dist --watch",
+    "dev:watch": "concurrently \"npm run watch\" \"npm run dev\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@koa/cors": "^4.0.0",
+    "concurrently": "^8.2.1",
     "cors": "^2.8.5",
     "faker": "^6.6.6",
     "firebase-admin": "^11.10.1",

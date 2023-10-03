@@ -1,17 +1,17 @@
-const {
+import {
   getListTodos,
-  add: addTodo,
-  getOne: getOneTodo,
-  remove: deleteTodo,
+  add,
+  getOne,
+  remove,
   updateTodos,
-} = require("../../database/todoRepository");
+} from "../../database/todoRepository";
 
 /**
  *
  * @param ctx
  * @returns {Promise<void>}
  */
-async function getTodos(ctx) {
+export async function getTodos  (ctx)  {
   try {
     const { limit, sort } = ctx.query;
     const products = await getListTodos(limit, sort);
@@ -27,12 +27,12 @@ async function getTodos(ctx) {
       error: e.message,
     };
   }
-}
+};
 
-async function save(ctx) {
+export const save = async (ctx) => {
   try {
     const postData = ctx.request.body;
-    const products = await addTodo(postData);
+    const products = await add(postData);
 
     ctx.status = 201;
     return (ctx.body = {
@@ -45,13 +45,13 @@ async function save(ctx) {
       error: e.message,
     });
   }
-}
+};
 
-async function getTodo(ctx) {
+export const getTodo = async (ctx) => {
   try {
     const { id } = ctx.params;
     const { field } = ctx.query;
-    const getCurrentProduct = await getOneTodo(id, field?.split(","));
+    const getCurrentProduct = await getOne(id, field?.split(","));
     if (getCurrentProduct) {
       return (ctx.body = {
         data: getCurrentProduct,
@@ -65,12 +65,12 @@ async function getTodo(ctx) {
       error: e.message,
     });
   }
-}
+};
 
-async function removeTodos(ctx) {
+export const removeTodos = async (ctx) => {
   try {
     const id = ctx.request.body;
-    await deleteTodo(id);
+    await remove(id);
     ctx.body = {
       success: true,
     };
@@ -81,9 +81,9 @@ async function removeTodos(ctx) {
       error: e.message,
     });
   }
-}
+};
 
-async function updates(ctx) {
+export const updates = async (ctx) => {
   try {
     const product = ctx.request.body;
     await updateTodos(product?.length > 1 ? product : [product]);
@@ -97,12 +97,4 @@ async function updates(ctx) {
       error: error.message,
     });
   }
-}
-
-module.exports = {
-  getTodos,
-  save,
-  getTodo,
-  removeTodos,
-  updates,
 };

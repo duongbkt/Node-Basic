@@ -1,4 +1,4 @@
-const yup = require("yup");
+import yup from "yup";
 
 async function todoInputMiddleware(ctx, next) {
   try {
@@ -20,4 +20,4 @@ async function todoInputMiddleware(ctx, next) {
   }
 }
 
-module.exports = todoInputMiddleware;
+export default todoInputMiddleware

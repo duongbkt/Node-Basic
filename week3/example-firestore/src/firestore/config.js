@@ -1,8 +1,8 @@
-const admin = require("firebase-admin");
+import admin from "firebase-admin";
 
-const serviceAccount = require("./creds.json");
+import serviceAccount from "../../creds.json";
 
-const { getFirestore } = require("firebase-admin/firestore");
+import { getFirestore } from "firebase-admin/firestore";
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -10,4 +10,4 @@ admin.initializeApp({
 
 const db = getFirestore();
 
-module.exports = db;
+export default db;

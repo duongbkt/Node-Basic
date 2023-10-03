@@ -1,4 +1,4 @@
-const pickFields = (obj, fields) => {
+export const pickFields = (obj, fields) => {
   const objNew = {};
   fields.map((field) => {
     if (obj[field]) {
@@ -7,5 +7,3 @@ const pickFields = (obj, fields) => {
   });
   return objNew;
 };
-
-module.exports = pickFields;

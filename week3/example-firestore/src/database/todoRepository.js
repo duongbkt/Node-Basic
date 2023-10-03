@@ -1,10 +1,10 @@
-const admin = require("firebase-admin");
-const db = require("../firestore/config");
-const prepareData = require("../helpers/prepareData");
-const pickFields = require("../../../../KoaJs/src/helpers/field");
+import admin from "firebase-admin";
+import db from "../firestore/config";
+import { prepareData } from "../helpers/prepareData";
+import pickFields from '../helpers/field';
 const todoRef = db.collection("todos");
 
-const getListTodos = async (limit = 0, sort = "DESC") => {
+export const getListTodos = async (limit = 0, sort = "ASC") => {
   const todos = await todoRef
     .orderBy("createAt", sort)
     .limit(Number(limit))
@@ -14,7 +14,7 @@ const getListTodos = async (limit = 0, sort = "DESC") => {
   });
 };
 
-const getOne = async (id, fields) => {
+export const getOne = async (id, fields) => {
   const todo = await (await todoRef.doc(id).get()).data();
   if (fields) {
     return pickFields(todo, fields);
@@ -22,7 +22,7 @@ const getOne = async (id, fields) => {
   return todo;
 };
 
-const add = async (data) => {
+export const add = async (data) => {
   const addData = {
     createAt: admin.firestore.Timestamp.now().toDate(),
     completed: false,
@@ -32,12 +32,12 @@ const add = async (data) => {
   return { id: todo.id, ...addData };
 };
 
-const remove = async (ids) => {
+export const remove = async (ids) => {
   const remove = ids.map((id) => todoRef.doc(id).delete());
   return await Promise.all(remove);
 };
 
-const updateTodos = async (todos) => {
+export const updateTodos = async (todos) => {
   const updates = todos.map((todo) => {
     todoRef.doc(todo.id).update({
       ...todo,
@@ -46,24 +46,4 @@ const updateTodos = async (todos) => {
     });
   });
   return await Promise.all(updates);
-};
-
-// const update = async (id, data) => {
-//   await db.batch().update(todoRef.doc(id), data).commit();
-//   return { id, ...data };
-// };
-
-// async function remove(ids = []) {
-//   ids.map(async (id) => {
-//     batch.delete(todoRef.doc(id));
-//   });
-//   batch.commit();
-// }
-
-module.exports = {
-  getListTodos,
-  add,
-  getOne,
-  remove,
-  updateTodos,
 };

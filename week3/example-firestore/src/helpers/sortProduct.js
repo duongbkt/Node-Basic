@@ -1,4 +1,4 @@
-const sortProduct = (sort, products) => {
+export const sortProduct = (sort, products) => {
   if (sort === "ASC") {
     const data = products
       .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
@@ -12,4 +12,4 @@ const sortProduct = (sort, products) => {
   }
 };
 
-module.exports = sortProduct;
+
